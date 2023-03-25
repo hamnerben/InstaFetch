@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from instaloader import ProfileNotExistsException, Instaloader
+from instaloader import ProfileNotExistsException
 from django.urls import reverse
 import re
 
@@ -130,8 +130,9 @@ def fetch2(request):
 
 
 def getImages(username):
-    L = Instaloader()
+    L = instaloader.Instaloader()
     loginInfo=Login.objects.get(email = "instafetch456@gmail.com")
+    print (loginInfo.password)
     L.login(loginInfo.username, loginInfo.password)
     try:
         profile = instaloader.Profile.from_username(L.context, username)
