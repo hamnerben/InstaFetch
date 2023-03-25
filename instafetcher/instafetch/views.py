@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from instaloader import ProfileNotExistsException
+from instaloader import ProfileNotExistsException, Instaloader
 from django.urls import reverse
 import re
 
@@ -95,16 +95,21 @@ def fetch(request):
     ## send email
     yag = yagmail.SMTP("instafetch456@gmail.com", "upsiavvbnqfxcudl")
     users = User.objects.all()
+
     for user in users:
+
         print(user)
         content = """
         <h1>Here is your instafetch update</h1>
         """
         for page in user.page_set.all():
-            posts = getImages(page.username)
-            for path in posts:
-                content += f'<img src="{path}">'
-                content += posts[path]
+            if page == None:
+                break
+            else:
+                posts = getImages(page.username)
+                for path in posts:
+                    content += f'<img src="{path}">'
+                    content += posts[path]
 
         yag.send(to=user.email, subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
@@ -125,13 +130,13 @@ def fetch2(request):
 
 
 def getImages(username):
-    L = instaloader.Instaloader()
+    L = Instaloader()
     loginInfo=Login.objects.get(email = "instafetch456@gmail.com")
     L.login(loginInfo.username, loginInfo.password)
     try:
         profile = instaloader.Profile.from_username(L.context, username)
 
-    except ProfileNotExistsException:
+    except instaloader.ProfileNotExistsException:
         print(f"The account {username} does not exist.")
 
     recent_posts = {}
