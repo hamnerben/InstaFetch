@@ -115,7 +115,7 @@ def fetch(request):
                     if path is None:
                         break
                     else:
-                        content += f'<img src="{path}" style="width: 50%; display: block; margin: auto;>'
+                        content += f'<img src="{path}" style="width: 50%; display: block; margin: auto;">'
                         content += f'<p style="text-align: center;">{posts[path]}</p>'
                         content += "<hr>"
 
