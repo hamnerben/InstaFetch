@@ -80,7 +80,7 @@ def addPage(request):
     page.user = userObj
     page.save()
 
-    return HttpResponseRedirect(reverse('instafetch:success.html'))
+    return HttpResponseRedirect(reverse('instafetch:success'))
 
 
 
