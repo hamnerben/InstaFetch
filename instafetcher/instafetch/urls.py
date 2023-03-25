@@ -12,4 +12,5 @@ urlpatterns = [
     path('addPage', views.addPage, name="addPage"),
     path('fetch', views.fetch, name="fetch"),
     path('deletePage', views.deletePage, name="deletePage"),
+    path('Success', views.success, name="success"),
 ]

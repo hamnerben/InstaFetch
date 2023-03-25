@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'instafetch/loginstyle.css' %}">
+    <meta charset="UTF-8">
+    <title>Successful add</title>
+</head>
+<body>
+<h1 class="instaheader">InstaFetcher</h1>
+<h2 class="center">Successfully add the page to your account!</h2>
+<p>Click  <a href="{% url 'instafetch:login' %}">here</a> to log out</p>
+
+</body>
+</html>

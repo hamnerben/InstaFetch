@@ -80,7 +80,8 @@ def addPage(request):
     page.user = userObj
     page.save()
 
-    return HttpResponseRedirect(reverse('instafetch:index'))
+    return HttpResponseRedirect(reverse('instafetch:success.html'))
+
 
 
 def fetch(request):
@@ -88,7 +89,7 @@ def fetch(request):
     ## send email
 
 
-    yag = yagmail.SMTP("instafetch455@gmail.com", "wdewxcbfitmbdijm")
+    yag = yagmail.SMTP("instafetch456@gmail.com", "upsiavvbnqfxcudl")
     posts = getImages("shitheadsteve")
     content = """
     <h1>Hello there</h1>
@@ -139,3 +140,6 @@ def deletePage(request):
     #     return redirect(previous_url)
     # else:
     #     return redirect(reverse('instafetch:index'))
+
+def success(request):
+    return render(request, 'instafetch/Success.html')
