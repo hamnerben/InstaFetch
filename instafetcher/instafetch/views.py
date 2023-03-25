@@ -63,14 +63,15 @@ def addPage(request):
     except:
         context = {'error_message': 'No email post data received'}
         return render(request, 'instafetch/error.html', context)
-    #  TODO: CHECK if instagram account exists
     try:
         L = instaloader.Instaloader()
         username = request.POST["username"]
         profile = instaloader.Profile.from_username(L.context, username)
 
     except ProfileNotExistsException:
-        print(f"The account {username} does not exist.")
+        context = {'error_message': f"The account {username} does not exist."}
+        return render(request, 'instafetch/error.html', context)
+
         
     return HttpResponseRedirect(reverse('instafetch:index.html'))
 
