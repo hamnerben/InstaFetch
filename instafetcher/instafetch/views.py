@@ -7,10 +7,10 @@ def index(request):
 def login(request):
     return render(request, 'instafetch/login.html')
 
-def singup(request):
+def signup(request):
     return render(request, 'instafetch/signup.html')
 
-def add(request):
+def addPage(request):
     pass
 
 def fetch(request):
