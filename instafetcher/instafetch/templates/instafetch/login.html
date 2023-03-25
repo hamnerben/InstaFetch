@@ -10,10 +10,11 @@
 
     </head>
     <body>
+    <h1 class="instaheader">InstaFetcher</h1>
     <div class="center, container">
             <form method="post" action="{% url 'instafetch:index' %}">
                 {% csrf_token %}
-                {% if error_message %}<p><strong>{{ error_message }}</strong></p>
+                {% if error_message %}<p class="red"><strong>{{ error_message }}</strong></p>
                 {% endif %}
                 <h2>Login to your account</h2>
 
