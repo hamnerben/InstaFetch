@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import User, Page
-
+import instaloader
+import datetime
 
 # Create your views here.
 def index(request):
@@ -49,3 +50,15 @@ def addPage(request):
 def fetch(request):
     pass
 
+def getImages(request,username):
+    L = instaloader.Instaloader()
+    profile = instaloader.Profile.from_username(L.context, username)
+    recent_posts = []
+    now = datetime.datetime.now()
+    one_hour_ago = now - datetime.timedelta(hours=1)
+    for post in profile.get_posts():
+        if post.date_local > one_hour_ago:
+            recent_posts.append(post.url)
+        else:
+            break
+    return recent_posts
