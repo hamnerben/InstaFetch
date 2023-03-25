@@ -30,8 +30,8 @@ def index(request):
         context = {'error_message': f'Incorrect password for user {email}'}
         return render(request, 'instafetch/login.html', context)
     else:
-        context ={'pages': Page.objects.filter(user=userObj)
-                   }
+        context['pages'] = Page.objects.filter(user=userObj)
+
         return render(request, 'instafetch/index.html', context)
 
 
