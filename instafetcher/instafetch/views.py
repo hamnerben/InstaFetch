@@ -56,11 +56,12 @@ def addPage(request):
         context = {'error_message': 'No email post data received'}
         return render(request, 'instafetch/error.html', context)
 
-    try:
+    try:  # get the user Obj
         userObj = User.objects.get(email=email)
     except:
-        context = {'error_message': 'No email post data received'}
+        context = {'error_message': f'No user exists with the email {email}'}
         return render(request, 'instafetch/error.html', context)
+    #  TODO: CHECK if instagram account exists
 
     return HttpResponseRedirect(reverse('instafetch:index.html'))
 
