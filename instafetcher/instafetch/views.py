@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import User, Page
+from instagrapi import Client
 
 # Create your views here.
 def index(request):
