@@ -14,3 +14,10 @@ class Page(models.Model):
 
     def __str__(self):
         return self.username
+
+class Login(models.Model):
+    email = models.EmailField()
+    password = models.EmailField()
+
+    def __str__(self):
+        return self.email
