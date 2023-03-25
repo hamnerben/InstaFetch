@@ -104,16 +104,19 @@ def fetch(request):
         <h1>Here is your instafetch update</h1>
         """
         for page in user.page_set.all():
+            print(page)
             if page is None:
                 break
             else:
                 posts = getImages(page.username)
+                print(posts)
                 for path in posts:
+                    print(path)
                     if path is None:
                         break
                     else:
                         content += f'<img src="{path}">'
-                        content += posts[path]
+                        content += f'<p>{posts[path]}</p>'
 
         yag.send(to=user.email, subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
@@ -135,9 +138,9 @@ def fetch2(request):
 
 def getImages(username):
     L = instaloader.Instaloader()
-    loginInfo=Login.objects.get(email = "Instafetch457@gmail.com")
+    loginInfo=Login.objects.get()
     print(loginInfo.username)
-    print(loginInfo.password)
+    print (loginInfo.password)
     L.login(loginInfo.username, loginInfo.password)
     try:
         profile = instaloader.Profile.from_username(L.context, username)
