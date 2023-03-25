@@ -1,5 +1,8 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from instaloader import ProfileNotExistsException
+from django.urls import reverse
+
 
 from .models import User, Page
 import instaloader
@@ -41,7 +44,7 @@ def addUser(request):
         user.email = request.POST.get('email')
         user.password = request.POST.get('password')
         user.save()
-        return render(request, 'instafetch/login.html')
+        return HttpResponseRedirect(reverse('instafetch:login.html'))
     else:
         return render(request, 'instafetch/login.html')
 
@@ -49,7 +52,20 @@ def signup(request):
     return render(request, 'instafetch/signup.html')
 
 def addPage(request):
-    pass
+    try:  # get email post data
+        email = request.POST['email']
+    except:
+        context = {'error_message': 'No email post data received'}
+        return render(request, 'instafetch/error.html', context)
+
+    try:  # get the user Obj
+        userObj = User.objects.get(email=email)
+    except:
+        context = {'error_message': f'No user exists with the email {email}'}
+        return render(request, 'instafetch/error.html', context)
+    #  TODO: CHECK if instagram account exists
+
+    return HttpResponseRedirect(reverse('instafetch:index.html'))
 
 
 def fetch(request):
