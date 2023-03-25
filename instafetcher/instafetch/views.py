@@ -15,3 +15,4 @@ def addPage(request):
 
 def fetch(request):
     pass
+
