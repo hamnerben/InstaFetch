@@ -72,7 +72,12 @@ def addPage(request):
         context = {'error_message': f"The account {username} does not exist."}
         return render(request, 'instafetch/error.html', context)
 
-        
+    #  add the page to the database
+    page = Page()
+    page.username = username
+    page.user = userObj
+    page.save()
+
     return HttpResponseRedirect(reverse('instafetch:index.html'))
 
 
