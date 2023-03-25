@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from instaloader import ProfileNotExistsException
+
 from .models import User, Page
 import instaloader
 import datetime
@@ -70,8 +72,18 @@ def fetch(request):
 
 def getImages(username):
     L = instaloader.Instaloader()
-    L.login("instafetch455@gmail.com", "BenSpencer2Nathan!")
-    profile = instaloader.Profile.from_username(L.context, username)
+    # L.login("instafetch455@gmail.com", "BenSpencer2Nathan!")
+    try:
+        # Try to load the profile of the target user
+        profile = instaloader.Profile.from_username(L.context, username)
+
+        # If the profile was loaded successfully, the account exists
+        print(f"The account {username} exists.")
+
+    except ProfileNotExistsException:
+        # If the profile could not be loaded, the account does not exist
+        print(f"The account {username} does not exist.")
+
     recent_posts = {}
     now = datetime.datetime.now()
     one_hour_ago = now - datetime.timedelta(hours=12)
