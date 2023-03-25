@@ -29,6 +29,16 @@ def index(request):
 def login(request):
     return render(request, 'instafetch/login.html')
 
+def addUser(request):
+    if request.method=="POST":
+        user = User()
+        user.email = request.POST.get('email')
+        user.password = request.POST.get('password')
+        user.save()
+        return render(request, 'instafetch/index.html')
+    else:
+        return render(request, 'instafetch/login.html')
+
 def signup(request):
     return render(request, 'instafetch/signup.html')
 
