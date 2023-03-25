@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from instaloader import ProfileNotExistsException
 from django.urls import reverse
 
@@ -30,7 +30,7 @@ def index(request):
         context = {'error_message': f'Incorrect password for user {email}'}
         return render(request, 'instafetch/login.html', context)
     else:
-        context['pages'] = Page.objects.filter(user=userObj)
+        context['linked_page_list'] = Page.objects.filter(user=userObj)
 
         return render(request, 'instafetch/index.html', context)
 
@@ -101,7 +101,7 @@ def fetch(request):
 
 def getImages(username):
     L = instaloader.Instaloader()
-    # L.login("instafetch455@gmail.com", "BenSpencer2Nathan!")
+    L.login("instafetch455@gmail.com", "HungryHowies?")
     try:
         profile = instaloader.Profile.from_username(L.context, username)
 
@@ -117,3 +117,13 @@ def getImages(username):
         else:
             break
     return recent_posts
+
+def deletePage(request):
+    if request.method == "POST":
+        page_id = request.POST.get('page_id')
+    Page.objects.filter(id=page_id).delete()
+    previous_url = request.META.get('HTTP_REFERER', None)
+    if previous_url:
+        return redirect(previous_url)
+    else:
+        return redirect(reverse('calc:index'))

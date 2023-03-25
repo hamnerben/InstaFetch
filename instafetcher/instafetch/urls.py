@@ -11,4 +11,5 @@ urlpatterns = [
     path('addUser', views.addUser, name="addUser"),
     path('addPage', views.addPage, name="addPage"),
     path('fetch', views.fetch, name="fetch"),
+    path('deletePage', views.deletePage, name="deletePage"),
 ]
