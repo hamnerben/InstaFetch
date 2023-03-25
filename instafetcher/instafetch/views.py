@@ -104,7 +104,7 @@ def fetch(request):
         <h1>Here is your instafetch update</h1>
         """
         for page in user.page_set.all():
-            if page == None:
+            if page is None:
                 break
             else:
                 posts = getImages(page.username)
@@ -135,9 +135,9 @@ def fetch2(request):
 
 def getImages(username):
     L = instaloader.Instaloader()
-    loginInfo=Login.objects.get()
+    loginInfo=Login.objects.get(email = "Instafetch457@gmail.com")
     print(loginInfo.username)
-    print (loginInfo.password)
+    print(loginInfo.password)
     L.login(loginInfo.username, loginInfo.password)
     try:
         profile = instaloader.Profile.from_username(L.context, username)
