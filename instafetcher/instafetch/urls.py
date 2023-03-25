@@ -5,4 +5,5 @@ app_name = "instafetch"
 
 urlpatterns = [
     path('', views.index, name="home"),
+    path('index', views.index, name="index"),
 ]
