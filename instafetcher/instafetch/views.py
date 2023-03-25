@@ -56,24 +56,26 @@ def fetch(request):
 
 
     yag = yagmail.SMTP("instafetch455@gmail.com", "wdewxcbfitmbdijm")
+    posts = getImages("shitheadsteve")
     content = """
     <h1>Hello there</h1>
     """
-    for path in range(3):
-        content += f'<img src="{"https://cdn11.bigcommerce.com/s-nf2x4/images/stencil/1280x1280/products/246/9133/Computer-Geek-Rubber-Duck-Schanables-3__49617.1671801009.jpg?c=2"}">'
+    for path in posts:
+        content += f'<img src="{path}">'
 
-    yag.send(to='instafetch455@gmail.com', subject='Your instafetch update', contents=content, attachments="instafetch/static/instafetch/images/zebra.png")
-    return render(request, "instafetch/index.html")
+    yag.send(to='instafetch455@gmail.com', subject='Your instafetch update', contents=content)
+    return render(request, "instafetch/login.html")
 
 
-def getImages(request,username):
+def getImages(username):
     L = instaloader.Instaloader()
+    L.login("instafetch455@gmail.com", "BenSpencer2Nathan!")
     profile = instaloader.Profile.from_username(L.context, username)
     recent_posts = []
     now = datetime.datetime.now()
-    one_hour_ago = now - datetime.timedelta(hours=1)
+    one_hour_ago = now - datetime.timedelta(hours=12)
     for post in profile.get_posts():
-        if post.date_local > one_hour_ago:
+        if post.date > one_hour_ago:
             recent_posts.append(post.url)
         else:
             break
