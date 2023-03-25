@@ -14,26 +14,21 @@
     <h2 class="center">Welcome to InstaFetcher</h2>
     <div class="center">
         <div class="center, container">
-            <form method="post" action="{% url 'instafetch:index' %}">
+            <form method="post" action="{% url 'instafetch:addPage' %}">
                 {% csrf_token %}
                 {% if error_message %}<p class="red"><strong>{{ error_message }}</strong></p>
                 {% endif %}
-                <h2>Login to your account</h2>
+                <h2>Link an account to your profile</h2>
 
                 <div class="input-parent">
-                    <label for="email">Email</label>
-                    <input name="email" type="email" id="email">
+                    <label for="username">Username</label>
+                    <input name="username" type="text" id="username">
                 </div>
 
-                <div class="input-parent">
-                    <label for="password">Password</label>
-                    <input name="password" type="password" id="password">
-                </div>
+
 
                 <button type="submit">Login</button>
             </form>
-            <p> Don't have an account?</p>
-            <p> Sign up <a href="{% url 'instafetch:signup' %}">here</a></p>
         </div>
     </div>
 </body>
