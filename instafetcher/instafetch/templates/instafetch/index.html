@@ -34,7 +34,7 @@
             {%if linked_page_list%}
             {%for page in linked_page_list%}
             <div>
-                Page {{page.username}}
+                Page: {{page.username}}
                 <form method="post" action="{% url 'instafetch:deletePage' %}">
                     {% csrf_token %}
                     <input type="hidden" name="page_id" value="{{ page.id }}">
