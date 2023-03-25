@@ -121,9 +121,19 @@ def getImages(username):
 def deletePage(request):
     if request.method == "POST":
         page_id = request.POST.get('page_id')
+        email = request.POST['email']
+        context = {'email': email}
+        try:  # get the user object
+            userObj = User.objects.get(email=email)
+        except:
+            context = {'error_message': f'No such user {email} exists'}
+            return render(request, 'instafetch/login.html', context)
     Page.objects.filter(id=page_id).delete()
-    previous_url = request.META.get('HTTP_REFERER', None)
-    if previous_url:
-        return redirect(previous_url)
-    else:
-        return redirect(reverse('calc:index'))
+    context['linked_page_list'] = Page.objects.filter(user=userObj)
+
+    return render(request, 'instafetch/index.html', context)
+    # previous_url = request.META.get('HTTP_REFERER', None)
+    # if previous_url:
+    #     return redirect(previous_url)
+    # else:
+    #     return redirect(reverse('instafetch:index'))

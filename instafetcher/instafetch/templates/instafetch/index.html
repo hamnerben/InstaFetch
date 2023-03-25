@@ -38,12 +38,14 @@
                 <form method="post" action="{% url 'instafetch:deletePage' %}">
                     {% csrf_token %}
                     <input type="hidden" name="page_id" value="{{ page.id }}">
+                    <input type="hidden" name="email" value="{{ email }}">
                     <button type="submit">Delete</button>
                 </form>
             </div>
             {%endfor%}
             {% else %}
             <p>No linked pages</p>
+            {%endif%}
         </div>
     </div>
 </body>
