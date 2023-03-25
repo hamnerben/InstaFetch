@@ -11,17 +11,18 @@ def index(request):
         password = request.POST['password']
         context = {'email': email}
     except:  # no email and/or password post data received
-        context = {'message': 'No password/email post data received'}
+        context = {'error_message': 'No password/email post data received'}
         return render(request, 'instafetch/login.html', context)
 
     try:  # get the user object
         userObj = User.objects.get(email=email)
     except:
-        context = {'message': f'No such user {email} exists'}
+        context = {'error_message': f'No such user {email} exists'}
         return render(request, 'instafetch/login.html', context)
 
+
     if(not userObj.password == password):  # email and password don't match
-        context = {'message': f'Incorrect password for user {email}'}
+        context = {'error_message': f'Incorrect password for user {email}'}
         return render(request, 'instafetch/login.html', context)
     else:
         context ={'pages': Page.objects.filter(user=userObj)
@@ -47,6 +48,7 @@ def signup(request):
 
 def addPage(request):
     pass
+
 
 def fetch(request):
 
