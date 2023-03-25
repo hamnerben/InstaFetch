@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import User, Page
-from instagrapi import Client
+
 
 # Create your views here.
 def index(request):
@@ -28,7 +28,7 @@ def index(request):
 
 
 def login(request):
-    return render(request, 'instafetch/login.html')
+    return render(request, 'instafetch/index.html')
 
 def addUser(request):
     if request.method=="POST":
@@ -36,7 +36,7 @@ def addUser(request):
         user.email = request.POST.get('email')
         user.password = request.POST.get('password')
         user.save()
-        return render(request, 'instafetch/index.html')
+        return render(request, 'instafetch/login.html')
     else:
         return render(request, 'instafetch/login.html')
 
