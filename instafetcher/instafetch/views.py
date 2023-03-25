@@ -65,6 +65,7 @@ def fetch(request):
     """
     for path in posts:
         content += f'<img src="{path}">'
+        content += posts[path]
 
     yag.send(to='instafetch455@gmail.com', subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
@@ -74,12 +75,12 @@ def getImages(username):
     L = instaloader.Instaloader()
     L.login("instafetch455@gmail.com", "BenSpencer2Nathan!")
     profile = instaloader.Profile.from_username(L.context, username)
-    recent_posts = []
+    recent_posts = {}
     now = datetime.datetime.now()
     one_hour_ago = now - datetime.timedelta(hours=12)
     for post in profile.get_posts():
         if post.date > one_hour_ago:
-            recent_posts.append(post.url)
+            recent_posts[post.url] = post.caption
         else:
             break
     return recent_posts
