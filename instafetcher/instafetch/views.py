@@ -73,7 +73,7 @@ def addPage(request):
         return render(request, 'instafetch/error.html', context)
     try:
         L = instaloader.Instaloader()
-        loginInfo = Login.objects.get(email="instafetch456@gmail.com")
+        loginInfo = Login.objects.get()
         L.login(loginInfo.email, loginInfo.password)
         username = request.POST["username"]
         profile = instaloader.Profile.from_username(L.context, username)
@@ -93,7 +93,8 @@ def addPage(request):
 
 def fetch(request):
     ## send email
-    yag = yagmail.SMTP("instafetch456@gmail.com", "upsiavvbnqfxcudl")
+    superSecret = Login.objects.get()
+    yag = yagmail.SMTP("instafetch457@gmail.com", superSecret.secretPassword)
     users = User.objects.all()
 
     for user in users:
@@ -108,15 +109,18 @@ def fetch(request):
             else:
                 posts = getImages(page.username)
                 for path in posts:
-                    content += f'<img src="{path}">'
-                    content += posts[path]
+                    if path is None:
+                        break
+                    else:
+                        content += f'<img src="{path}">'
+                        content += posts[path]
 
         yag.send(to=user.email, subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
 
 def fetch2(request):
     ## send email
-    yag = yagmail.SMTP("instafetch456@gmail.com", "upsiavvbnqfxcudl")
+    yag = yagmail.SMTP("instafetch457@gmail.com", "upsiavvbnqfxcudl")
     posts = getImages("shitheadsteve")
     content = """
     <h1>Hello there</h1>
@@ -125,13 +129,14 @@ def fetch2(request):
         content += f'<img src="{path}">'
         content += posts[path]
 
-    yag.send(to='instafetch455@gmail.com', subject='Your instafetch update', contents=content)
+    yag.send(to='instafetch457@gmail.com', subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
 
 
 def getImages(username):
     L = instaloader.Instaloader()
-    loginInfo=Login.objects.get(email = "instafetch456@gmail.com")
+    loginInfo=Login.objects.get()
+    print(loginInfo.username)
     print (loginInfo.password)
     L.login(loginInfo.username, loginInfo.password)
     try:
