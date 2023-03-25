@@ -53,6 +53,8 @@ def addPage(request):
 def fetch(request):
 
     ## send email
+
+
     yag = yagmail.SMTP("instafetch455@gmail.com", "wdewxcbfitmbdijm")
     posts = getImages("shitheadsteve")
     content = """
