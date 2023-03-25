@@ -14,6 +14,8 @@
     <div class="center, container">
         <form method="post" action="{% url 'instafetch:addUser' %}">
             {% csrf_token %}
+            {% if error_message %}<p class="red"><strong>{{ error_message }}</strong></p>
+            {% endif %}
             <h2>create your account</h2>
 
             <div class="input-parent">

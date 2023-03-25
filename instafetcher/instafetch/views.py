@@ -2,12 +2,15 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from instaloader import ProfileNotExistsException
 from django.urls import reverse
+import re
 
 
 from .models import User, Page, Login
 import instaloader
 import datetime
 import yagmail
+
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 # Create your views here.
 def index(request):
@@ -41,12 +44,17 @@ def login(request):
 def addUser(request):
     if request.method=="POST":
         user = User()
-        user.email = request.POST.get('email')
-        user.password = request.POST.get('password')
-        user.save()
-        return HttpResponseRedirect(reverse('instafetch:login'))
+        email = request.POST.get('email')
+        if check(email) == 1:
+            user.email = email
+            user.password = request.POST.get('password')
+            user.save()
+            return HttpResponseRedirect(reverse('instafetch:login'))
+        else:
+            context = {'error_message': f'not a valid email please try again'}
+            return render(request, 'instafetch/signup.html', context)
     else:
-        return render(request, 'instafetch/login.html')
+        return render(request, 'instafetch/signup.html')
 
 def signup(request):
     return render(request, 'instafetch/signup.html')
@@ -88,6 +96,7 @@ def fetch(request):
     yag = yagmail.SMTP("instafetch456@gmail.com", "upsiavvbnqfxcudl")
     users = User.objects.all()
     for user in users:
+        print(user)
         content = """
         <h1>Here is your instafetch update</h1>
         """
@@ -156,3 +165,13 @@ def deletePage(request):
 
 def success(request):
     return render(request, 'instafetch/Success.html')
+
+
+def check(email):
+    # pass the regular expression
+    # and the string into the fullmatch() method
+    if(re.fullmatch(regex, email)):
+        return 1
+
+    else:
+        return 0
