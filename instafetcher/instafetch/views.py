@@ -31,7 +31,7 @@ def index(request):
 
 
 def login(request):
-    return render(request, 'instafetch/index.html')
+    return render(request, 'instafetch/login.html')
 
 def addUser(request):
     if request.method=="POST":
