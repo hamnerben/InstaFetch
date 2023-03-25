@@ -13,6 +13,8 @@
     <div class="center, container">
             <form method="post" action="{% url 'instafetch:index' %}">
                 {% csrf_token %}
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>
+                {% endif %}
                 <h2>Login to your account</h2>
 
                 <div class="input-parent">
