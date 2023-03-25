@@ -4,7 +4,7 @@ from instaloader import ProfileNotExistsException
 from django.urls import reverse
 
 
-from .models import User, Page
+from .models import User, Page, Login
 import instaloader
 import datetime
 import yagmail
@@ -65,6 +65,8 @@ def addPage(request):
         return render(request, 'instafetch/error.html', context)
     try:
         L = instaloader.Instaloader()
+        loginInfo = Login.objects.get(email="instafetch456@gmail.com")
+        L.login(loginInfo.email, loginInfo.password)
         username = request.POST["username"]
         profile = instaloader.Profile.from_username(L.context, username)
 
@@ -78,7 +80,7 @@ def addPage(request):
     page.user = userObj
     page.save()
 
-    return HttpResponseRedirect(reverse('instafetch:index.html'))
+    return HttpResponseRedirect(reverse('instafetch:index'))
 
 
 def fetch(request):
@@ -101,7 +103,8 @@ def fetch(request):
 
 def getImages(username):
     L = instaloader.Instaloader()
-    L.login("instafetch455@gmail.com", "HungryHowies?")
+    loginInfo=Login.objects.get(email = "instafetch456@gmail.com")
+    L.login(loginInfo.email, loginInfo.password)
     try:
         profile = instaloader.Profile.from_username(L.context, username)
 
