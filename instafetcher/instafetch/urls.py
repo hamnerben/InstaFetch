@@ -8,6 +8,7 @@ urlpatterns = [
     path('index', views.index, name="index"),
     path('login', views.login, name="login"),
     path('signup', views.signup, name="signup"),
+    path('addUser', views.addUser, name="addUser"),
     path('add_page', views.addPage, name="add_page"),
     path('fetch', views.fetch, name="fetch"),
 ]
