@@ -1,4 +1,7 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+
 from .models import User, Page
 import instaloader
 import datetime
@@ -39,7 +42,7 @@ def addUser(request):
         user.email = request.POST.get('email')
         user.password = request.POST.get('password')
         user.save()
-        return render(request, 'instafetch/login.html')
+        return HttpResponseRedirect(reverse('instafetch/login.html'))
     else:
         return render(request, 'instafetch/login.html')
 
