@@ -109,14 +109,14 @@ def fetch(request):
                 break
             else:
                 posts = getImages(page.username)
-                print(posts)
+                content += f'<h3 style="text-align:center;">Here is the update on {page}</h3>'
                 for path in posts:
                     print(path)
                     if path is None:
                         break
                     else:
-                        content += f'<img src="{path}">'
-                        content += f'<p>{posts[path]}</p>'
+                        content += f'<img src="{path}" style="width: 50%; display: block; margin: auto;>'
+                        content += f'<p style="text-align: center;">{posts[path]}</p>'
 
         yag.send(to=user.email, subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
