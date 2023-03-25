@@ -64,7 +64,14 @@ def addPage(request):
         context = {'error_message': f'No user exists with the email {email}'}
         return render(request, 'instafetch/error.html', context)
     #  TODO: CHECK if instagram account exists
+    try:
+        L = instaloader.Instaloader()
+        username = request.POST["username"]
+        profile = instaloader.Profile.from_username(L.context, username)
 
+    except ProfileNotExistsException:
+        print(f"The account {username} does not exist.")
+        
     return HttpResponseRedirect(reverse('instafetch:index.html'))
 
 
@@ -90,14 +97,9 @@ def getImages(username):
     L = instaloader.Instaloader()
     # L.login("instafetch455@gmail.com", "BenSpencer2Nathan!")
     try:
-        # Try to load the profile of the target user
         profile = instaloader.Profile.from_username(L.context, username)
 
-        # If the profile was loaded successfully, the account exists
-        print(f"The account {username} exists.")
-
     except ProfileNotExistsException:
-        # If the profile could not be loaded, the account does not exist
         print(f"The account {username} does not exist.")
 
     recent_posts = {}
