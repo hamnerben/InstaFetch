@@ -17,6 +17,7 @@ def index(request):
     except:
         context = {'message': f'No such user {email} exists'}
         return render(request, 'instafetch/login.html', context)
+    
 
     if(not userObj.password == password):  # email and password don't match
         context = {'message': f'Incorrect password for user {email}'}
@@ -45,6 +46,7 @@ def signup(request):
 
 def addPage(request):
     pass
+
 
 def fetch(request):
     pass

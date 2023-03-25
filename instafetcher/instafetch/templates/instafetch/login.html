@@ -10,35 +10,25 @@
 
     </head>
     <body>
-        <h1 class="instaheader">InstaFetcher</h1>
-        <div class="center, ">
-<!--            <form method="post" action="{% url 'instafetch:index' %}">-->
-<!--                {% csrf_token %}-->
-<!--&lt;!&ndash;                    <input name="email" id= "email" type="email" >&ndash;&gt;-->
-<!--                    <input name="password" id = "password" type = "password">-->
-<!--                    <button type="submit">Calculate</button>-->
-<!--            </form>-->
-        </div>
+    <div class="center, container">
+            <form method="post" action="{% url 'instafetch:index' %}">
+                {% csrf_token %}
+                <h2>Login to your account</h2>
 
-<div class="center, container">
-        <form method="post" action="{% url 'instafetch:index' %}">
-            {% csrf_token %}
-            <h2>Login to your account</h2>
+                <div class="input-parent">
+                    <label for="email">Email</label>
+                    <input name="email" type="email" id="email">
+                </div>
 
-            <div class="input-parent">
-                <label for="email">Email</label>
-                <input name="email" type="email" id="email">
-            </div>
+                <div class="input-parent">
+                    <label for="password">Password</label>
+                    <input name="password" type="password" id="password">
+                </div>
 
-            <div class="input-parent">
-                <label for="password">Password</label>
-                <input name="password" type="password" id="password">
-            </div>
-
-            <button type="submit">Login</button>
-        </form>
-    <p> dont have an account?</p>
-    <p> sign up <a href="{% url 'instafetch:signup' %}">here</a></p>
-</div>
+                <button type="submit">Login</button>
+            </form>
+        <p> dont have an account?</p>
+        <p> sign up <a href="{% url 'instafetch:signup' %}">here</a></p>
+    </div>
     </body>
 </html>
