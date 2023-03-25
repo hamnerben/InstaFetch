@@ -117,6 +117,7 @@ def fetch(request):
                     else:
                         content += f'<img src="{path}" style="width: 50%; display: block; margin: auto;>'
                         content += f'<p style="text-align: center;">{posts[path]}</p>'
+                        content += "<hr>"
 
         yag.send(to=user.email, subject='Your instafetch update', contents=content)
     return render(request, "instafetch/login.html")
