@@ -44,7 +44,7 @@ def addUser(request):
         user.email = request.POST.get('email')
         user.password = request.POST.get('password')
         user.save()
-        return HttpResponseRedirect(reverse('instafetch:login.html'))
+        return HttpResponseRedirect(reverse('instafetch:login'))
     else:
         return render(request, 'instafetch/login.html')
 
@@ -127,11 +127,13 @@ def deletePage(request):
             userObj = User.objects.get(email=email)
         except:
             context = {'error_message': f'No such user {email} exists'}
-            return render(request, 'instafetch/login.html', context)
+            return redirect(request, 'instafetch/login.html', context)
     Page.objects.filter(id=page_id).delete()
-    context['linked_page_list'] = Page.objects.filter(user=userObj)
 
-    return render(request, 'instafetch/index.html', context)
+    context['linked_page_list'] = Page.objects.filter(user=userObj)
+    previous_url = request.META.get('HTTP_REFERER', context)
+    return redirect(previous_url)
+    #return render(request, 'instafetch/index.html', context)
     # previous_url = request.META.get('HTTP_REFERER', None)
     # if previous_url:
     #     return redirect(previous_url)
